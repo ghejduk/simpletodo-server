@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+  app:
+    image: ghejduk/simpletodo-server
+    depends_on:
+      - mysql
+    ports:
+      - 900:8080
+
+  mysql:
+    image: mysql
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_DATABASE: simpletodo
