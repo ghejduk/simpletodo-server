@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "pl.ghejduk")
+@ComponentScan(basePackages = "pl.ghejduk.application.task")
 @PropertySource("classpath:/db/jdbc.properties")
 @EnableTransactionManagement
 public class AppConfig {
@@ -54,11 +54,7 @@ public class AppConfig {
     public SessionFactory sessionFactory(DataSource dataSource) throws IOException {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-//        sessionFactory.setMappingResources(
-//                "/hibernate/User.hbm.xml",
-//                "/hibernate/Transaction.hbm.xml",
-//                "/hibernate/Account.hbm.xml"
-//        );
+        sessionFactory.setPackagesToScan("pl.ghejduk.application.task");
         sessionFactory.setHibernateProperties(getHibernateProperties());
         sessionFactory.afterPropertiesSet();
         return sessionFactory.getObject();

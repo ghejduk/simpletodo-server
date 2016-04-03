@@ -3,28 +3,24 @@ package pl.ghejduk.application.task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-@Transactional
-@SuppressWarnings("unchecked")
-public class TaskList {
+public class CreateTask {
 
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public TaskList(SessionFactory sessionFactory) {
+    public CreateTask(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    @RequestMapping(value = "/all", method = {RequestMethod.GET})
-    public List<Task> hello() {
+    @RequestMapping(value = "/create", method = {RequestMethod.POST})
+    public void create(@RequestBody Task task) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Task.class).list();
+        session.save(task);
     }
 }
